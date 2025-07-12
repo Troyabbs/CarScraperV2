@@ -36,7 +36,7 @@ is_running = False
 interval = None
 
 def scraper_call():
-    asyncio.run(runScraper(brand_entry.get(), model_entry.get(), price_entry.get(), km_entry.get()))
+    asyncio.run(runScraper(brand_entry.get().strip().lower(), model_entry.get().strip().lower().replace(" ", "-"), price_entry.get().strip(), km_entry.get().strip()))
 
 def run_periodically():
     global interval
@@ -53,7 +53,7 @@ def start_scraper():
         run_periodically()
     else:
         is_running = False
-        scraper_button.config(text="Start Scraper (runs every 10 seconds)")
+        scraper_button.config(text="Start Scraper (runs every 60 seconds)")
         if interval:
             root.after_cancel(interval)
             interval = None
@@ -67,7 +67,7 @@ def open_csv():
         os.startfile("carlist.csv")
 
 scraper_button = ttk.Button(root, text="Start Scraper (runs every 10 seconds)", command=start_scraper)
-scraper_button.pack(pady=(10,0))
+scraper_button.pack(pady=(20,0))
 
 clear_button = ttk.Button(root, text="Clear CSV", command=clear_csv)
 clear_button.pack(pady=(10, 0))

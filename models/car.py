@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class Car:
@@ -7,4 +7,5 @@ class Car:
     mileage: str
     price: str
     url: str
+    score: float = field(default=0.0)
     
