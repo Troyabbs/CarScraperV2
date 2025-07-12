@@ -1,0 +1,7 @@
+carlist.csv
+pushover/pushoverSecrets.py
+__pycache__/
+*.pyc
+.vscode/
+.env
+*.log
