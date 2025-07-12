@@ -6,13 +6,13 @@ from dataclasses import asdict
 import os
 from pushover.sendNotification import sendToPhone
 
-async def runScraper(searchterm: str, maxprice: str, maxkm: str):
+async def runScraper(brand: str, model: str, maxprice: str, maxkm: str):
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(headless=True)
         page = await browser.new_page()
         carlist = []
         for page_num in range(1, 2):
-            await page.goto(f"https://www.trademe.co.nz/a/motors/cars/search?search_string={searchterm}&price_max={maxprice}&odometer_max={maxkm}&page={page_num}", wait_until="load")
+            await page.goto(f"https://www.trademe.co.nz/a/motors/cars/{brand}/{model}/search?price_max={maxprice}&odometer_max={maxkm}&page={page_num}", wait_until="load")
 
             carqueries = []
             for cls in [

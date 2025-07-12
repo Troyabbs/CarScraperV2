@@ -16,9 +16,13 @@ ttk.Label(title_frame, text="trade", font=("Verdana", 18, "bold"), foreground="#
 ttk.Label(title_frame, text="me", font=("Verdana", 18, "bold"), foreground="#f5a623").pack(side=tk.LEFT, padx=(0, 0))
 ttk.Label(title_frame, text=" CarScraperV2", font=("Verdana", 18, "bold")).pack(side=tk.LEFT)
 
-tk.Label(root, text="Search Term").pack()
-search_entry = ttk.Entry(root)
-search_entry.pack()
+tk.Label(root, text="Car Brand").pack()
+brand_entry = ttk.Entry(root)
+brand_entry.pack()
+
+tk.Label(root, text="Car Model").pack()
+model_entry = ttk.Entry(root)
+model_entry.pack()
 
 tk.Label(root, text="Max Price").pack()
 price_entry = ttk.Entry(root)
@@ -32,7 +36,7 @@ is_running = False
 interval = None
 
 def scraper_call():
-    asyncio.run(runScraper(search_entry.get(), price_entry.get(), km_entry.get()))
+    asyncio.run(runScraper(brand_entry.get(), model_entry.get(), price_entry.get(), km_entry.get()))
 
 def run_periodically():
     global interval
