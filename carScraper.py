@@ -3,6 +3,8 @@ from playwright.async_api import async_playwright
 from models.car import Car
 import pandas as pd
 from dataclasses import asdict
+import os
+from pushover.sendNotification import sendToPhone
 
 async def runScraper(searchterm: str, maxprice: str, maxkm: str):
     async with async_playwright() as playwright:
@@ -33,14 +35,17 @@ async def runScraper(searchterm: str, maxprice: str, maxkm: str):
                 carlist.append(car)
                 print(car)
 
-        old_df = pd.read_csv("carlist.csv")
         new_df = pd.DataFrame([asdict(car) for car in carlist])
-        keys = ["title", "location", "price"]
-        new_df_keys = new_df[keys].apply(tuple, axis=1)
-        old_df_keys = old_df[keys].apply(tuple, axis=1)
-        new_listings = new_df[~new_df_keys.isin(old_df_keys)]
-        if not new_listings.empty:
-            print("New listings found:")
-            print(new_listings)
+        if os.path.exists("carlist.csv"):
+            old_df = pd.read_csv("carlist.csv")
+            keys = ["title", "location", "price"]
+            new_df_keys = new_df[keys].apply(tuple, axis=1)
+            old_df_keys = old_df[keys].apply(tuple, axis=1)
+            new_listings = new_df[~new_df_keys.isin(old_df_keys)]
+            if not new_listings.empty:
+                print("New listings found:")
+                print(new_listings)
+                for index, row in new_listings.iterrows():
+                    sendToPhone((row["title"] + ", " + row["location"] + ", " + row["mileage"] + ", " + row["price"]), row["url"])
         new_df.to_csv("carlist.csv", index=False)
         print("Done")
