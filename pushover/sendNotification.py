@@ -7,7 +7,7 @@ def sendToPhone(message: str, url: str):
     urllib.parse.urlencode({
         "token": token,
         "user": user,
-        "title": "Pushover test",
+        "title": "New Car Listing",
         "message": message,
         "url": url,
         "priority": 0

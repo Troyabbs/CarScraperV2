@@ -42,7 +42,7 @@ def run_periodically():
     global interval
     thread = Thread(target=scraper_call)
     thread.start()
-    interval = root.after(60000, run_periodically)
+    interval = root.after(2000000, run_periodically)
 
 def start_scraper():
     global is_running, interval
